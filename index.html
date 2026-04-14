@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2d7a2d" />
+  <meta name="description" content="Gestor de tiempos para Asamblea de Circuito" />
+  <title>Asamblea de Circuito 2025-2026</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- jsPDF para exportar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-overlay">
+      <div class="header-content">
+        <div class="header-badge">Asamblea de Circuito 2025–2026</div>
+        <h1 class="header-title">"Tienen que adorarlo con espíritu y con verdad"</h1>
+        <p class="header-verse">Juan 4:24</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-primary" onclick="App.addDiscoForm()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Nuevo discurso
+      </button>
+      <button class="btn btn-ghost" onclick="App.toggleDarkMode()" id="darkModeBtn" title="Modo oscuro">
+        <svg viewBox="0 0 24 24" width="16" height="16" id="darkIcon"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+      </button>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn btn-export" onclick="App.exportCSV()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+        CSV
+      </button>
+      <button class="btn btn-export" onclick="App.exportPDF()">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+        PDF
+      </button>
+      <button class="btn btn-ghost" onclick="App.clearAll()" title="Limpiar todo">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SESIONES -->
+  <main class="sessions-container">
+
+    <!-- SESIÓN MAÑANA -->
+    <section class="session-block" id="session-manana">
+      <div class="session-header manana">
+        <span class="session-icon">🌅</span>
+        <h2>Sesión de la Mañana</h2>
+        <span class="session-time">9:40 – 12:05</span>
+      </div>
+      <div class="discursos-list" id="list-manana"></div>
+    </section>
+
+    <!-- SESIÓN TARDE -->
+    <section class="session-block" id="session-tarde">
+      <div class="session-header tarde">
+        <span class="session-icon">🌤️</span>
+        <h2>Sesión de la Tarde</h2>
+        <span class="session-time">1:20 – 4:00</span>
+      </div>
+      <div class="discursos-list" id="list-tarde"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: Agregar/Editar discurso -->
+  <div class="modal-overlay" id="modalOverlay" onclick="App.closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modalTitle">Nuevo Discurso</h3>
+        <button class="modal-close" onclick="App.closeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editId" />
+        <div class="form-group">
+          <label>Sesión</label>
+          <select id="formSesion">
+            <option value="manana">Mañana</option>
+            <option value="tarde">Tarde</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tema / Título</label>
+          <input type="text" id="formTema" placeholder="Ej: Discurso público..." />
+        </div>
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="formTipo">
+            <option value="discurso">Discurso</option>
+            <option value="musica">Música / Canción</option>
+            <option value="anuncio">Anuncio</option>
+            <option value="oracion">Oración</option>
+            <option value="bautismo">Bautismo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Orador (opcional)</label>
+          <input type="text" id="formOrador" placeholder="Nombre del orador..." />
+        </div>
+        <div class="form-group">
+          <label>Duración estimada (min)</label>
+          <input type="number" id="formDuracion" min="1" max="120" placeholder="Ej: 30" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="App.closeModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="App.saveDiscoForm()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker registrado'))
+        .catch(err => console.warn('SW error:', err));
+    }
+  </script>
+</body>
+</html>

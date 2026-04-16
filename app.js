@@ -188,6 +188,9 @@ function createCard(d) {
         </div>
       </div>
       <div class="disco-card-actions">
+        <button class="btn btn-share btn-sm" onclick="App.shareDiscurso('${d.id}')" title="Copiar al portapapeles">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
         <button class="btn btn-ghost btn-sm" onclick="App.editDisco('${d.id}')" title="Editar">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="App.deleteDisco('${d.id}')" title="Eliminar">🗑️</button>
       </div>
@@ -418,6 +421,54 @@ const App = {
     saveState();
     render();
     showToast('🗑️ Discurso eliminado');
+  },
+
+  // --- Compartir discurso (copiar al portapapeles) ---
+  shareDiscurso(id) {
+    const disco = state.discursos.find(d => d.id === id);
+    if (!disco) return;
+
+    const timer = getTimer(id);
+    const elapsed = timer.elapsed;
+
+    // Construir el texto con solo los campos que tienen datos
+    const sesionLabel = disco.sesion === 'manana' ? '🌅 Mañana' : '🌤️ Tarde';
+    const lines = [];
+
+    lines.push('📋 *' + disco.tema + '*');
+    lines.push('Sesión: ' + sesionLabel);
+
+    if (disco.orador)    lines.push('🎤 Orador: ' + disco.orador);
+    if (disco.horaInicio) lines.push('🕐 Inicio: ' + formatHora(disco.horaInicio));
+    if (disco.horaFin)    lines.push('🕐 Fin:    ' + formatHora(disco.horaFin));
+    if (elapsed > 0)      lines.push('⏱ Tiempo: ' + formatTime(elapsed));
+    if (disco.obs && disco.obs.trim()) lines.push('📝 Obs: ' + disco.obs.trim());
+
+    // Pie con nombre de la asamblea
+    lines.push('');
+    lines.push('— ' + (state.header.badge || 'Asamblea de Circuito'));
+
+    const texto = lines.join('\n');
+
+    // Copiar al portapapeles
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          showToast('📋 ¡Copiado al portapapeles!');
+          // Feedback visual en el botón
+          const card = document.getElementById('card-' + id);
+          if (card) {
+            const btn = card.querySelector('.btn-share');
+            if (btn) {
+              btn.classList.add('copied');
+              setTimeout(() => btn.classList.remove('copied'), 1800);
+            }
+          }
+        })
+        .catch(() => fallbackCopy(texto));
+    } else {
+      fallbackCopy(texto);
+    }
   },
 
   // --- Cerrar modal ---
@@ -669,6 +720,24 @@ function downloadFile(content, filename, mime) {
   document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Fallback para copiar en navegadores que no soportan clipboard API
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('📋 ¡Copiado al portapapeles!');
+  } catch(e) {
+    // Último recurso: mostrar el texto en un prompt para copiar manualmente
+    window.prompt('Seleccioná y copiá el texto:', text);
+  }
+  document.body.removeChild(ta);
 }
 
 // Cerrar modal con Escape

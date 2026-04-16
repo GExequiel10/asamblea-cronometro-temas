@@ -658,3 +658,48 @@ body.dark .toast { background: var(--verde); }
   .font-size-label { display: none; }
   .btn-font { padding: 7px 9px; }
 }
+
+/* === BOTÓN COMPARTIR === */
+.btn-share {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+.btn-share:hover {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+/* Feedback "copiado" */
+.btn-share.copied {
+  background: var(--verde);
+  color: white;
+  border-color: var(--verde);
+  animation: share-pop 0.25s ease;
+}
+@keyframes share-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Dark mode para btn-share */
+body.dark .btn-share {
+  background: #1e3a5f;
+  color: #93c5fd;
+  border-color: #1d4ed8;
+}
+body.dark .btn-share:hover {
+  background: #2563eb;
+  color: white;
+}

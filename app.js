@@ -677,8 +677,29 @@ const App = {
 // HELPERS GLOBALES
 // ============================================================
 function applyFontSize() {
-  document.documentElement.style.fontSize = (state.fontSize / 100) + 'rem';
-  // Actualizar label
+  // Aplicamos zoom en #appWrapper (header + toolbar + contenido).
+  // Los modales y el toast quedan fuera del wrapper, así position:fixed
+  // sigue funcionando correctamente sin importar el nivel de zoom.
+  const scale = state.fontSize / 100;
+  const wrapper = document.getElementById('appWrapper');
+
+  if (wrapper) {
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+    if (isFirefox) {
+      // Firefox no soporta CSS zoom: usamos transform con compensación de alto
+      wrapper.style.transform = `scale(${scale})`;
+      wrapper.style.transformOrigin = 'top left';
+      wrapper.style.width = (100 / scale) + '%';
+      wrapper.style.zoom = '';
+    } else {
+      // Chrome, Edge, Safari, Android WebView: zoom nativo
+      wrapper.style.zoom = scale;
+      wrapper.style.transform = '';
+      wrapper.style.width = '';
+    }
+  }
+
+  // Actualizar label del botón
   const label = document.getElementById('fontSizeLabel');
   if (label) label.textContent = state.fontSize + '%';
 }

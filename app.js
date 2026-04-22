@@ -8,28 +8,27 @@
 // DATOS PRECARGADOS DEL PROGRAMA (CA-copgm26-S)
 // ============================================================
 const PROGRAMA_INICIAL = [
-  // --- MAÑANA ---
-  { sesion: 'manana', tipo: 'musica',   tema: 'Música de fondo',                                    duracion: 10 },
-  { sesion: 'manana', tipo: 'oracion',  tema: 'Canción 85 y oración',                               duracion: 10 },
-  { sesion: 'manana', tipo: 'discurso', tema: '"El Padre sin duda está buscando a personas así"',    duracion: 15 },
-  { sesion: 'manana', tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con espíritu" — cuando tratemos de entender su guía', duracion: 15 },
-  { sesion: 'manana', tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con espíritu" — cuando estemos desanimados',         duracion: 15 },
-  { sesion: 'manana', tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con espíritu" — cuando queramos hacer más por Jehová', duracion: 15 },
-  { sesion: 'manana', tipo: 'anuncio',  tema: 'Canción 88 y anuncios',                              duracion: 10 },
-  { sesion: 'manana', tipo: 'discurso', tema: '¿Cómo "damos a conocer la verdad"?',                 duracion: 20 },
-  { sesion: 'manana', tipo: 'bautismo', tema: 'Discurso de bautismo: El significado de su bautismo', duracion: 30 },
-  { sesion: 'manana', tipo: 'musica',   tema: 'Canción 51',                                         duracion: 5  },
+  // --- MAÑANA --- (CA-brpgm26-S)
+  { sesion: 'manana', tipo: 'musica',   tema: 'Música de fondo',                                          duracion: 10 },
+  { sesion: 'manana', tipo: 'oracion',  tema: 'Canción 1 y oración',                                      duracion: 10 },
+  { sesion: 'manana', tipo: 'discurso', tema: '¿Cómo podemos oír lo que el espíritu dice?',               duracion: 15 },
+  { sesion: 'manana', tipo: 'discurso', tema: '"No te has cansado"',                                      duracion: 15 },
+  { sesion: 'manana', tipo: 'discurso', tema: '"No tengas miedo"',                                        duracion: 25 },
+  { sesion: 'manana', tipo: 'anuncio',  tema: 'Canción 73 y anuncios',                                    duracion: 10 },
+  { sesion: 'manana', tipo: 'discurso', tema: '"No renegaste de tu fe en mí"',                            duracion: 30 },
+  { sesion: 'manana', tipo: 'bautismo', tema: 'Discurso de bautismo: El significado de su bautismo',      duracion: 30 },
+  { sesion: 'manana', tipo: 'musica',   tema: 'Canción 79',                                               duracion: 5  },
   // --- TARDE ---
-  { sesion: 'tarde',  tipo: 'musica',   tema: 'Música de fondo',                                    duracion: 10 },
-  { sesion: 'tarde',  tipo: 'oracion',  tema: 'Canción 72 y oración',                               duracion: 5  },
-  { sesion: 'tarde',  tipo: 'discurso', tema: 'Discurso público: Cómo distinguir lo que está bien de lo que está mal', duracion: 30 },
-  { sesion: 'tarde',  tipo: 'discurso', tema: 'Resumen de La Atalaya',                              duracion: 30 },
-  { sesion: 'tarde',  tipo: 'anuncio',  tema: 'Canción 56 y anuncios',                              duracion: 10 },
-  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con verdad" — en la familia',               duracion: 15 },
-  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con verdad" — en un mundo dividido',        duracion: 15 },
-  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Adoremos a Dios "con verdad" — cuando tengamos problemas económicos', duracion: 15 },
-  { sesion: 'tarde',  tipo: 'discurso', tema: '"Compra la verdad y nunca la vendas"',               duracion: 30 },
-  { sesion: 'tarde',  tipo: 'oracion',  tema: 'Canción 29 y oración',                               duracion: 5  },
+  { sesion: 'tarde',  tipo: 'musica',   tema: 'Música de fondo',                                          duracion: 10 },
+  { sesion: 'tarde',  tipo: 'musica',   tema: 'Canción 126',                                              duracion: 5  },
+  { sesion: 'tarde',  tipo: 'discurso', tema: 'Experiencias',                                             duracion: 10 },
+  { sesion: 'tarde',  tipo: 'discurso', tema: 'Resumen de La Atalaya',                                    duracion: 30 },
+  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Sigamos los consejos de Jesús — "Aférrense a lo que tienen"',        duracion: 15 },
+  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Sigamos los consejos de Jesús — "Sé vigilante y fortalece lo que queda"', duracion: 15 },
+  { sesion: 'tarde',  tipo: 'discurso', tema: 'Serie: Sigamos los consejos de Jesús — "He puesto ante ti una puerta abierta"', duracion: 15 },
+  { sesion: 'tarde',  tipo: 'anuncio',  tema: 'Canción 76 y anuncios',                                    duracion: 10 },
+  { sesion: 'tarde',  tipo: 'discurso', tema: '"Demuestra entusiasmo"',                                   duracion: 45 },
+  { sesion: 'tarde',  tipo: 'oracion',  tema: 'Canción 129 y oración',                                    duracion: 5  },
 ];
 
 // Emojis por tipo
@@ -51,16 +50,16 @@ let state = {
   fontSize: 100,    // Porcentaje: 80 a 140
   header: {
     badge: 'Asamblea de Circuito 2025–2026',
-    title: '"Tienen que adorarlo con espíritu y con verdad"',
-    verse: 'Juan 4:24',
+    title: '"Oiga lo que el espíritu les dice a las congregaciones"',
+    verse: 'Apocalipsis 3:22',
   },
 };
 
 // Valores por defecto del header (para resetear)
 const HEADER_DEFAULT = {
   badge: 'Asamblea de Circuito 2025–2026',
-  title: '"Tienen que adorarlo con espíritu y con verdad"',
-  verse: 'Juan 4:24',
+  title: '"Oiga lo que el espíritu les dice a las congregaciones"',
+  verse: 'Apocalipsis 3:22',
 };
 
 // --- Persistencia con LocalStorage ---
@@ -78,12 +77,12 @@ function saveState() {
       }])
     )
   };
-  localStorage.setItem('asamblea_app_v2', JSON.stringify(toSave));
+  localStorage.setItem('asamblea_app_v3', JSON.stringify(toSave));
 }
 
 function loadState() {
   try {
-    const raw = localStorage.getItem('asamblea_app_v2');
+    const raw = localStorage.getItem('asamblea_app_v3');
     if (raw) {
       const saved = JSON.parse(raw);
       state.discursos = saved.discursos || [];
@@ -217,10 +216,10 @@ function createCard(d) {
       <div class="disco-field full">
         <label>📝 Observaciones</label>
         <textarea class="disco-obs" placeholder="Notas, comentarios..."
-          maxlength="180"
+          maxlength="500"
           oninput="App.updateField('${d.id}', 'obs', this.value); App.updateObsCount(this)"
           onchange="App.updateField('${d.id}', 'obs', this.value)">${escapeHtml(d.obs || '')}</textarea>
-        <span class="obs-counter" id="obs-count-${d.id}">${180 - (d.obs ? d.obs.length : 0)} car. restantes</span>
+        <span class="obs-counter" id="obs-count-${d.id}">${500 - (d.obs ? d.obs.length : 0)} car. restantes</span>
       </div>
     </div>
 
@@ -351,13 +350,13 @@ const App = {
 
   // --- Actualizar contador de caracteres en observaciones ---
   updateObsCount(textarea) {
-    const max = parseInt(textarea.getAttribute('maxlength')) || 180;
+    const max = parseInt(textarea.getAttribute('maxlength')) || 500;
     const remaining = max - textarea.value.length;
     // Buscar el span contador que sigue al textarea
     const counter = textarea.parentElement.querySelector('.obs-counter');
     if (counter) {
       counter.textContent = remaining + ' car. restantes';
-      counter.classList.toggle('obs-counter-low', remaining <= 30);
+      counter.classList.toggle('obs-counter-low', remaining <= 50);
     }
   },
 
